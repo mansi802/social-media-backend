@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
-
+const dotenv = require("dotenv");
 const app = express();
-const { DB } = require("./config");
+dotenv.config();
 const userRouter = require("./routes/UserRouter");
 const postRouter = require("./routes/PostRouter");
 
@@ -15,7 +15,7 @@ app.get("/", (req, res) => {
 });
 
 mongoose
-  .connect(DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => console.log("CONNECT TO MONGODB 😀"))
   .catch((err) => console.log(err));
 

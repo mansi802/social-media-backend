@@ -16,12 +16,11 @@ const register = async (req, res) => {
       confirmPassword
     );
 
-    (!valid) && res.status(500).json(errors);
-    
+    !valid && res.status(500).json(errors);
 
     const user = await User.findOne({ email });
-    
-    user && res.status(500).json({message:"User already exist"});
+
+    user && res.status(500).json({ message: "User already exist" });
 
     password = await bcrypt.hash(password, 12);
 
@@ -48,17 +47,16 @@ const login = async (req, res) => {
     const user = await User.findOne({ email });
 
     if (!user) {
-      res.status(500).json({message:"User does not exist"});
+      res.status(500).json({ message: "User does not exist.Please register" });
     }
 
     const match = await bcrypt.compare(password, user.password);
-    if (!match) res.status(500).json({message:"Password does not match"});
+    if (!match) res.status(500).json({ message: "Password does not match" });
 
     return res.status(201).json(user);
   } catch ({ message }) {
     return res.status(404).json({ message });
   }
 };
-
 
 module.exports = { login, register };

@@ -13,7 +13,8 @@ const createPost = async (req, res) => {
   try {
     const { name, body, avatar } = req.body;
 
-    if (body.trim() === "") return res.status(500).json({message:"Body cannot be empty"});
+    if (body.trim() === "")
+      return res.status(500).json({ message: "Post body cannot be empty" });
 
     const post = await Post({ name, body, avatar });
     await post.save();
@@ -93,7 +94,8 @@ const addComment = async (req, res) => {
     const { name, content, avatar } = req.body;
     const { post_id } = req.params;
 
-    if (content.trim() === "") return res.status(500).json({message:"Comment cannot be empty"});
+    if (content.trim() === "")
+      return res.status(500).json({ message: "Comment cannot be empty" });
 
     const post = await Post.findById(post_id);
 
